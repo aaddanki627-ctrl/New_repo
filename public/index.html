@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e14">
+  <title>TrustVault | Secure document sharing</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main id="loginView" class="login-view">
+    <form id="loginForm" class="panel login-card">
+      <div class="brand">🔒 TrustVault</div>
+      <p class="muted">Private documents. Explicit access. Verifiable activity.</p>
+      <label>Email<input id="email" name="email" type="email" autocomplete="username" required></label>
+      <label>Password<input id="password" name="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit">Sign in</button>
+      <p id="loginError" class="message error" role="alert"></p>
+      <p class="hint">Seeded demo accounts are configured by the administrator.</p>
+    </form>
+  </main>
+  <div id="appView" class="hidden">
+    <header>
+      <a class="brand" href="/">🔒 TrustVault</a>
+      <div class="header-right"><span id="userBadge" class="badge"></span><button id="logoutButton" class="button secondary">Sign out</button></div>
+    </header>
+    <nav aria-label="Main navigation">
+      <button class="nav-button active" data-tab="documents">Documents</button>
+      <button class="nav-button" data-tab="activity" id="activityNav">Admin activity</button>
+    </nav>
+    <main class="content">
+      <section id="documentsTab" class="tab active">
+        <div class="section-heading"><div><h1>Your documents</h1><p class="muted">Only documents you own or have been granted access to appear here.</p></div></div>
+        <form id="uploadForm" class="panel upload-form hidden">
+          <label>Document<input id="fileInput" type="file" name="file" accept=".pdf,.docx,.txt,.png,.jpg,.jpeg" required></label>
+          <label>Category<select id="uploadCategory" name="category"><option>Work</option><option>Legal</option><option>Finance</option><option>Other</option></select></label>
+          <button type="submit">Upload document</button>
+          <span class="hint">PDF, DOCX, TXT, PNG or JPEG; max 10 MB.</span>
+        </form>
+        <form id="searchForm" class="panel filters">
+          <label>Name<input name="name" placeholder="Search name"></label>
+          <label>Owner<input name="owner" placeholder="Search owner"></label>
+          <label>Category<select name="category"><option value="">All categories</option><option>Work</option><option>Legal</option><option>Finance</option><option>Other</option></select></label>
+          <label>From<input name="from" type="date"></label>
+          <label>To<input name="to" type="date"></label>
+          <button type="submit">Search</button>
+          <button id="clearSearch" type="button" class="button secondary">Clear</button>
+        </form>
+        <p id="notice" class="message" role="status"></p>
+        <div id="fileGrid" class="grid"></div>
+        <p id="emptyState" class="muted hidden">No documents match these filters.</p>
+      </section>
+      <section id="activityTab" class="tab hidden">
+        <div class="section-heading"><div><h1>Audit activity</h1><p class="muted">Append-only events, linked by an HMAC hash chain.</p></div><button id="refreshAudit" class="button secondary">Refresh</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Document</th><th>Outcome</th><th>Details</th><th>Event hash</th></tr></thead><tbody id="auditBody"></tbody></table></div>
+      </section>
+    </main>
+  </div>
+  <dialog id="permissionDialog" class="panel">
+    <form method="dialog" class="dialog-heading"><div><h2>Manage access</h2><p id="permissionDocument" class="muted"></p></div><button class="button secondary" value="cancel" aria-label="Close">Close</button></form>
+    <form id="grantForm" class="grant-form">
+      <label>User<select id="shareUser" required></select></label>
+      <label>Permission<select id="shareLevel"><option value="read">Read</option><option value="edit">Edit</option></select></label>
+      <button type="submit">Grant access</button>
+    </form>
+    <h3>Current access</h3><div id="permissionList" class="permission-list"></div>
+  </dialog>
+  <dialog id="editDialog" class="panel">
+    <form id="editForm">
+      <h2>Edit document details</h2>
+      <label>Name<input id="editName" maxlength="150" required></label>
+      <label>Category<select id="editCategory"><option>Work</option><option>Legal</option><option>Finance</option><option>Other</option></select></label>
+      <div class="dialog-actions"><button type="submit">Save changes</button><button id="cancelEdit" type="button" class="button secondary">Cancel</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

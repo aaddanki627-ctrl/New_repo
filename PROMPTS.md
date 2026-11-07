@@ -1,0 +1,13 @@
+# AI-use log
+
+Entries recorded 2026-11-07. Each entry describes an actual prompt in this implementation session and the corresponding validation or design decision; no model-generated result is treated as security proof.
+
+1. **2026-11-07 — Project review:** “Check each button and each feature ... implement all above details ... convert this python project into node js.” The initial inspection found a static JavaScript/localStorage prototype and no Python source in the workspace. Replaced the mock persistence and client-only permission checks with a Node.js server, while preserving the document-sharing workflow.
+2. **2026-11-07 — Authorization:** “Unauthorized document access” was tested against the direct detail, download, edit, delete, and permission API routes using independent owner, viewer, and admin sessions. Server middleware now checks current ownership/grants on every document request; the automated tests exercise those routes rather than relying on hidden buttons.
+3. **2026-11-07 — Revocation:** The brief required revocation to take effect immediately. Permissions are read from SQLite on each request; tests grant access, verify read/download, revoke, and verify that the very next read/download is denied.
+4. **2026-11-07 — Auditing:** The brief required evidence of denied attempts and tamper resistance. Added append-only SQLite audit events chained with HMACs, denial auditing, startup chain verification, and a test that verifies the chain and attempts a forbidden database update.
+5. **2026-11-07 — Uploads and UI:** The brief required validated uploads and working document controls. Added server-side size/type/signature/category checks and an API-backed UI for search, download, edit, owner permission management, and admin audit; API tests cover upload validation and searchable metadata.
+6. **2026-11-07 — Limitations review:** Asked that the security and deployment requirements remain explicit. Documented the local SQLite, key-management, WORM, MFA, and deployment limitations in `THREATS.md` and `README.md`; no live deployment or public repository was claimed.
+7. **2026-11-07 — Final requirement check:** “Final check for all features ... check project requirements.” The review found that an edit grant only changed metadata. Added a validated file-replacement route for owners/edit grantees, denied it to read-only users, and tested replacement bytes through the download route. Also covered malformed API requests, date validation, admin-owned documents, and the 10 MB limit.
+
+AI assistance accelerated implementation but did not replace manual review or the API security tests. Do not enter credentials or private document content into AI prompts.
