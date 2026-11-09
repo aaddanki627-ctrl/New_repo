@@ -464,4 +464,11 @@ if (require.main === module) {
   app.listen(port, () => console.log(`TrustVault listening on http://localhost:${port}`));
 }
 
-module.exports = { app, db, seedUsers, verifyAuditChain, hash, dataDir };
+module.exports = Object.assign(app, {
+  app,
+  db,
+  seedUsers,
+  verifyAuditChain,
+  hash,
+  dataDir
+});
