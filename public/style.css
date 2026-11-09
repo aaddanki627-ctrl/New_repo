@@ -29,7 +29,7 @@ nav{display:flex;gap:8px;padding:12px max(20px,calc((100vw - 1200px)/2));border-
 .nav-button.active{background:#28345e;color:white}
 .content{max-width:1200px;margin:auto;padding:24px 20px}
 .section-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-h1{font-size:24px;margin:0 0 7px}
+h1{font-size:60px;margin:0 0 7px}
 h2{margin:0;font-size:20px}
 h3{font-size:15px}
 .section-heading p{margin:0}
